@@ -1,6 +1,7 @@
 package com.fabiocoral.workshopmongo.resources;
 
 import com.fabiocoral.workshopmongo.domain.User;
+import com.fabiocoral.workshopmongo.dto.UserDTO;
 import com.fabiocoral.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +17,9 @@ public class UserResource {
     private UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll(){
+    public ResponseEntity<List<UserDTO>> findAll(){
         List<User> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).toList();
+        return ResponseEntity.ok().body(listDto);
     }
 }
