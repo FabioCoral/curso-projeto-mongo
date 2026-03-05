@@ -22,4 +22,13 @@ public class UserResource {
         List<UserDTO> listDto = list.stream().map(x -> new UserDTO(x)).toList();
         return ResponseEntity.ok().body(listDto);
     }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<UserDTO> findById(@PathVariable String id){
+        User user = service.findById(id);
+        UserDTO userDTO = new UserDTO(user);
+        return ResponseEntity.ok().body(userDTO);
+    }
+
+
 }
