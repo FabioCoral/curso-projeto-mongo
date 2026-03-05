@@ -7,7 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WorkshopmongoApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WorkshopmongoApplication.class, args);
+		SpringApplication app = new SpringApplication(WorkshopmongoApplication.class);
+		app.setDefaultProperties(
+				java.util.Map.of("spring.data.mongodb.database", "Workshop_mongo")
+		);
+		app.run(args);
 	}
-
 }
