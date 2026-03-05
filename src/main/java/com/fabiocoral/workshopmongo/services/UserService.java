@@ -1,11 +1,10 @@
 package com.fabiocoral.workshopmongo.services;
 
 import com.fabiocoral.workshopmongo.domain.User;
+import com.fabiocoral.workshopmongo.dto.UserDTO;
 import com.fabiocoral.workshopmongo.repository.UserRepository;
 import com.fabiocoral.workshopmongo.services.exception.ObjectNotFoundException;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,15 +25,14 @@ public class UserService {
         return user.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
     }
 
-
-    @Autowired
-    private MongoTemplate mongoTemplate;
-
-    @PostConstruct
-    public void verificarBanco() {
-        System.out.println("Database conectado: " + mongoTemplate.getDb().getName());
-        System.out.println("Collection usada: " + mongoTemplate.getCollectionName(User.class));
-        System.out.println("Qtd registros: " + repo.count());
-
+    public User insert(User obj){
+        return repo.insert(obj);
     }
+
+    public User fromDTO(UserDTO userDTO){
+        return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
+    }
+
+
+
 }
