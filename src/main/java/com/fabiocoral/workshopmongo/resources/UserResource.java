@@ -1,5 +1,6 @@
 package com.fabiocoral.workshopmongo.resources;
 
+import com.fabiocoral.workshopmongo.domain.Post;
 import com.fabiocoral.workshopmongo.domain.User;
 import com.fabiocoral.workshopmongo.dto.UserDTO;
 import com.fabiocoral.workshopmongo.services.UserService;
@@ -52,6 +53,12 @@ public class UserResource {
         user.setId(id);
         user = service.update(user);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id){
+        User user = service.findById(id);
+        return ResponseEntity.ok().body(user.getPosts());
     }
 
 
